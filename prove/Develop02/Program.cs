@@ -1,5 +1,6 @@
 using System;
-
+//added some error handling to ensure the files are .txt and the file exisits to 
+//exceed the requirments. 
 class Program
 {
     static void Main(string[] args)
