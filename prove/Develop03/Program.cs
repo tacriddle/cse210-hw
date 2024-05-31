@@ -1,5 +1,7 @@
 using System;
-
+//
+//I went above and beyond for this assignment by adding the ability to see how long it 
+//takes you to memorize the scripture.
 namespace ScriptureApp
 {
     class Program
