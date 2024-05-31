@@ -13,6 +13,8 @@ namespace ScriptureApp
 
             var scripture = new Scripture(scriptureRef, scriptureText);
 
+            scripture.StartMemorization();
+
             while (!scripture.AllWordsHidden())
             {
                 scripture.Display();
@@ -22,6 +24,9 @@ namespace ScriptureApp
                     break;
                 scripture.HideRandomWord();
             }
+
+            scripture.StopMemorization();
+            Console.WriteLine($"You memorized the scripture in {scripture.MemorizationTime.TotalSeconds} seconds.");
         }
     }
 }

@@ -2,28 +2,33 @@ namespace ScriptureApp
 {
     public class ScriptureWord
     {
-        public string Word { get; private set; }
-        public bool Hidden { get; private set; }
+        private string word;
+        private bool hidden;
 
         public ScriptureWord(string word)
         {
-            Word = word;
-            Hidden = false;
+            this.word = word;
+            hidden = false;
         }
 
         public void Hide()
         {
-            Hidden = true;
+            hidden = true;
         }
 
         public void Reveal()
         {
-            Hidden = false;
+            hidden = false;
+        }
+
+        public bool IsHidden()
+        {
+            return hidden;
         }
 
         public override string ToString()
         {
-            return Hidden ? "______" : Word;
+            return hidden ? "______" : word;
         }
     }
 }
