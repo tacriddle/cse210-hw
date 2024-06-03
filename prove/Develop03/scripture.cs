@@ -34,7 +34,7 @@ namespace ScriptureApp
         public void HideRandomWord()
         {
             var visibleWords = words.Where(word => !word.IsHidden()).ToList();
-            if (visibleWords.Count > 0)
+            if (visibleWords.Count >= 0)
             {
                 var wordToHide = visibleWords[new Random().Next(visibleWords.Count)];
                 wordToHide.Hide();
