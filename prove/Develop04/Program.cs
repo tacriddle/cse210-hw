@@ -1,6 +1,6 @@
 using System;
 using System.Diagnostics;
-
+//Added the counting activity for exceeding requirements
 class Program
 {
     static void Main(string[] args)
@@ -11,8 +11,9 @@ class Program
             Console.WriteLine("1. Start reflecting activity");
             Console.WriteLine("2. Start listing activity");
             Console.WriteLine("3. Start breathing activity");
-            Console.WriteLine("4. Quit");
-            Console.Write("Sellect a choice from the menu:");
+            Console.WriteLine("4. Start counting activity");
+            Console.WriteLine("5. Quit");
+            Console.Write("Select a choice from the menu:");
             quit=int.Parse(Console.ReadLine());
             int duration;
             switch(quit){
@@ -46,7 +47,17 @@ class Program
                 breathing.BreathingActivity();
                 break;
                 case 4:
+                Console.Write("What would like the duration of the activity to be: ");
+                duration=int.Parse(Console.ReadLine());
+                string countingTile="Counting";
+                string countingDesc="You will be couting outloud with a counter to help you relax";
+                Counting counting=new(countingTile,countingDesc,duration);
+                counting.DisplayIntroMessage();
+                counting.CountingActivity();
+                break;
+                case 5:
                 quit=0;
+                Console.WriteLine("Thanks for using the mindfulness app!");
                 break;
             }
         }
