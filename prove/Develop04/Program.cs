@@ -34,7 +34,7 @@ class Program
                 string listingDesc="This activity will hlep you reflect on theh good things in your life by having you list as many things as you can in a certain area.";
                 Listing listing=new(listingTitle,listingDesc,duration);
                 listing.DisplayIntroMessage();
-                listing.populatePrompts();
+                listing.PopulatePrompts();
                 listing.ListingActivity();
                 break;
                 case 3:

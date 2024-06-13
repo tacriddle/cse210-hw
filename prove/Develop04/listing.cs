@@ -38,7 +38,7 @@ public Listing(string titleParam, string descParam, int durationParam)
         DisplayAnimation(animationDelay);
     }
 
-    public void populatePrompts(){
+    public void PopulatePrompts(){
         _prompts.Add("Who are people thtat you apprreciate.");
         _prompts.Add("What are personal strenghts of yours?");
         _prompts.Add("Who  are people that you have helped this week?");
