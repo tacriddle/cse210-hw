@@ -7,10 +7,12 @@ public class SecurityCamera:Device{
 
     public override void TurnOn()
     {
+        _isOn=true;
         _securityCameraStatus=1;
     }
     public override void TurnOff()
     {
+        _isOn=false;
         _securityCameraStatus=0;
     }
     public override void DisplayStatus()

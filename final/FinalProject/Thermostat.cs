@@ -1,3 +1,5 @@
+using System.Runtime.CompilerServices;
+
 public class Thermostat:Device{
     private int _temp;
     private int _ac;
@@ -18,16 +20,19 @@ public class Thermostat:Device{
     public override void TurnOn()
     {
         if (_desiredTemp<_temp){
+            _isOn=true;
             _ac=1;
             _heat=0;
             _status=1;
         }
         else if (_desiredTemp>_temp){
+            _isOn=true;
             _ac=0;
             _heat=1;
             _status=1;
         }
         else{
+            _isOn=false;
             _ac=0;
             _heat=0;
             _status=0;
@@ -35,6 +40,7 @@ public class Thermostat:Device{
     }
     public override void TurnOff()
     {
+        _isOn=false;
         _ac=0;
         _heat=0;
         _status=0;

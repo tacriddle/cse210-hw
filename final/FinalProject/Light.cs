@@ -7,10 +7,12 @@ public class Light:Device{
 
     public override void TurnOn()
     {
+        _isOn=true;
         _lightStatus=1;
     }
     public override void TurnOff()
     {
+        _isOn=false;
         _lightStatus=0;
     }
 

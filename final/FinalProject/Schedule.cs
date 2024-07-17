@@ -1,5 +1,3 @@
-using System;
-
 public class Schedule
 {
     private int _startTime;   // Time in 24-hour format (e.g., 1300 for 1:00 PM)

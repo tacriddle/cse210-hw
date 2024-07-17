@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 public class DeviceManager
 {
@@ -7,6 +9,12 @@ public class DeviceManager
     private List<string> typeOfDevice = new List<string> { "Thermostat", "Light", "Security Camera" };
     private string _device;
     private string _deviceName;
+    private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
+
+    public DeviceManager()
+    {
+        StartBackgroundTask();
+    }
 
     public void CreateDevice()
     {
@@ -67,6 +75,7 @@ public class DeviceManager
             device.DisplayStatus();
         }
     }
+
     public void ChangeStatusOfDevice()
     {
         Console.Write("What is the name of the device you would like to change? ");
@@ -83,6 +92,7 @@ public class DeviceManager
             Console.WriteLine("Device not found.");
         }
     }
+
     public void CreateScheduleForDevice()
     {
         Console.Write("Enter the name of the device you would like to schedule: ");
@@ -97,6 +107,7 @@ public class DeviceManager
             int turnOffTime = int.Parse(Console.ReadLine());
 
             Schedule schedule = new Schedule(startTime, turnOffTime);
+            deviceToSchedule.DeviceSchedule = schedule; // Assign the schedule to the device
             Console.WriteLine($"Schedule created for device '{deviceNameToSchedule}'.");
             schedule.DisplaySchedule();
         }
@@ -104,5 +115,31 @@ public class DeviceManager
         {
             Console.WriteLine("Device not found.");
         }
+    }
+
+    private void StartBackgroundTask()
+    {
+        Task.Run(() =>
+        {
+            while (!_cancellationTokenSource.Token.IsCancellationRequested)
+            {
+                int currentTime = GetCurrentTime();
+                foreach (Device device in listOfDevices)
+                {
+                    device.CheckSchedule(currentTime);
+                }
+                Thread.Sleep(1000); // Check every second
+            }
+        }, _cancellationTokenSource.Token);
+    }
+
+    private int GetCurrentTime()
+    {
+        return int.Parse(DateTime.Now.ToString("HHmm")); // Return time in 24-hour format as an integer
+    }
+
+    public void StopBackgroundTask()
+    {
+        _cancellationTokenSource.Cancel();
     }
 }
