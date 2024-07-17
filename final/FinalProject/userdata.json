@@ -1,0 +1,11 @@
+{
+  "thomas": [
+    {
+      "Type": "Light",
+      "LightStatus": 1,
+      "DeviceName": "test",
+      "IsOn": true,
+      "DeviceSchedule": null
+    }
+  ]
+}

@@ -1,35 +1,36 @@
-using System.Security.Cryptography;
+public class SecurityCamera : Device
+{
+    public int SecurityCameraStatus { get; set; }
 
-public class SecurityCamera:Device{
-    private int _securityCameraStatus;
-    
-    public SecurityCamera(string deviceName): base(deviceName){}
+    public SecurityCamera() { }
+
+    public SecurityCamera(string deviceName) : base(deviceName) { }
 
     public override void TurnOn()
     {
-        _isOn=true;
-        _securityCameraStatus=1;
+        IsOn = true;
+        SecurityCameraStatus = 1;
     }
+
     public override void TurnOff()
     {
-        _isOn=false;
-        _securityCameraStatus=0;
+        IsOn = false;
+        SecurityCameraStatus = 0;
     }
+
     public override void DisplayStatus()
     {
-        if (_securityCameraStatus==1){
-            Console.WriteLine("The security camera is on");
-        }
-        else if (_securityCameraStatus==0){
-            Console.WriteLine("The security camera is off");
-        }
+        Console.WriteLine($"{DeviceName} is currently {(IsOn ? "on" : "off")}");
     }
+
     public override void ChangeStatusOfDevice()
     {
-        if (_securityCameraStatus==1){
+        if (IsOn)
+        {
             TurnOff();
         }
-        else if (_securityCameraStatus==0){
+        else
+        {
             TurnOn();
         }
     }

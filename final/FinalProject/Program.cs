@@ -1,8 +1,11 @@
+using System;
+
 class Program
 {
     static void Main(string[] args)
     {
         DeviceManager deviceManager = new DeviceManager();
+        SmartHome smartHome = new SmartHome(deviceManager);
         int quit = 1;
         while (quit != 0)
         {
@@ -15,13 +18,16 @@ class Program
             Console.WriteLine("5. Change status of device");
             Console.WriteLine("6. Remove a device");
             Console.WriteLine("7. Create a schedule for a device");
+            Console.WriteLine("8. Save current user devices");
             Console.WriteLine("0. Quit");
             quit = int.Parse(Console.ReadLine());
             switch (quit)
             {
                 case 1:
+                    smartHome.CreateNewUser();
                     break;
                 case 2:
+                    smartHome.LoadUserData();
                     break;
                 case 3:
                     deviceManager.CreateDevice();
@@ -38,9 +44,13 @@ class Program
                 case 7:
                     deviceManager.CreateScheduleForDevice();
                     break;
+                case 8:
+                    Console.Write("Enter the user's name: ");
+                    string userName = Console.ReadLine();
+                    smartHome.SaveCurrentUserDevices(userName);
+                    break;
                 case 0:
                     Console.WriteLine("Thanks for using the Smart Home Manager!");
-                    deviceManager.StopBackgroundTask();
                     break;
                 default:
                     Console.WriteLine("Invalid choice, please try again!");
@@ -49,3 +59,4 @@ class Program
         }
     }
 }
+

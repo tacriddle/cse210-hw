@@ -1,39 +1,37 @@
+public class Light : Device
+{
+    public int LightStatus { get; set; }
 
-public class Light:Device{
-    private int _lightStatus;
-    private string _lightStatusDesc;
-    
-    public Light(string deviceName): base(deviceName){}
+    public Light() { }
+
+    public Light(string deviceName) : base(deviceName) { }
 
     public override void TurnOn()
     {
-        _isOn=true;
-        _lightStatus=1;
+        IsOn = true;
+        LightStatus = 1;
     }
+
     public override void TurnOff()
     {
-        _isOn=false;
-        _lightStatus=0;
+        IsOn = false;
+        LightStatus = 0;
     }
 
     public override void DisplayStatus()
     {
-        if (_lightStatus==1){
-            _lightStatusDesc="on";
-        }
-        else if (_lightStatus==0){
-            _lightStatusDesc="off";
-        }
-        Console.WriteLine($"{_deviceName} is currently {_lightStatusDesc}");
+        Console.WriteLine($"{DeviceName} is currently {(IsOn ? "on" : "off")}");
     }
+
     public override void ChangeStatusOfDevice()
     {
-        if (_lightStatus==1){
+        if (IsOn)
+        {
             TurnOff();
         }
-        else if(_lightStatus==0){
+        else
+        {
             TurnOn();
         }
     }
-
 }

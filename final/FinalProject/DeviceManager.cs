@@ -11,11 +11,6 @@ public class DeviceManager
     private string _deviceName;
     private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
-    public DeviceManager()
-    {
-        StartBackgroundTask();
-    }
-
     public void CreateDevice()
     {
         Console.WriteLine("Here is a list of the type of devices available:");
@@ -29,21 +24,18 @@ public class DeviceManager
         Console.Write("What would you like the name of your device to be: ");
         _deviceName = Console.ReadLine();
 
-        if (_device == "Thermostat")
+        Device newDevice = _device switch
         {
-            Thermostat thermostat = new Thermostat(_deviceName);
-            listOfDevices.Add(thermostat);
-            thermostat.InitlizeValues();
-        }
-        else if (_device == "Light")
+            "Thermostat" => new Thermostat(_deviceName),
+            "Light" => new Light(_deviceName),
+            "Security Camera" => new SecurityCamera(_deviceName),
+            _ => null
+        };
+
+        if (newDevice != null)
         {
-            Light light = new Light(_deviceName);
-            listOfDevices.Add(light);
-        }
-        else if (_device == "Security Camera")
-        {
-            SecurityCamera securityCamera = new SecurityCamera(_deviceName);
-            listOfDevices.Add(securityCamera);
+            listOfDevices.Add(newDevice);
+            Console.WriteLine($"Device '{_deviceName}' of type '{_device}' has been created.");
         }
         else
         {
@@ -56,7 +48,7 @@ public class DeviceManager
         Console.Write("Enter the name of the device you would like to remove: ");
         string deviceNameToRemove = Console.ReadLine();
 
-        Device deviceToRemove = listOfDevices.Find(device => device.GetDeviceName() == deviceNameToRemove);
+        Device deviceToRemove = listOfDevices.Find(device => device.DeviceName == deviceNameToRemove);
         if (deviceToRemove != null)
         {
             listOfDevices.Remove(deviceToRemove);
@@ -81,7 +73,7 @@ public class DeviceManager
         Console.Write("What is the name of the device you would like to change? ");
         string deviceNameToChange = Console.ReadLine();
 
-        Device deviceToChange = listOfDevices.Find(device => device.GetDeviceName() == deviceNameToChange);
+        Device deviceToChange = listOfDevices.Find(device => device.DeviceName == deviceNameToChange);
         if (deviceToChange != null)
         {
             deviceToChange.ChangeStatusOfDevice();
@@ -98,7 +90,7 @@ public class DeviceManager
         Console.Write("Enter the name of the device you would like to schedule: ");
         string deviceNameToSchedule = Console.ReadLine();
 
-        Device deviceToSchedule = listOfDevices.Find(device => device.GetDeviceName() == deviceNameToSchedule);
+        Device deviceToSchedule = listOfDevices.Find(device => device.DeviceName == deviceNameToSchedule);
         if (deviceToSchedule != null)
         {
             Console.Write("Enter the start time (in 24-hour format, e.g., 1300 for 1:00 PM): ");
@@ -107,7 +99,7 @@ public class DeviceManager
             int turnOffTime = int.Parse(Console.ReadLine());
 
             Schedule schedule = new Schedule(startTime, turnOffTime);
-            deviceToSchedule.DeviceSchedule = schedule; // Assign the schedule to the device
+            deviceToSchedule.DeviceSchedule = schedule;
             Console.WriteLine($"Schedule created for device '{deviceNameToSchedule}'.");
             schedule.DisplaySchedule();
         }
@@ -128,7 +120,7 @@ public class DeviceManager
                 {
                     device.CheckSchedule(currentTime);
                 }
-                Thread.Sleep(1000); // Check every second
+                Thread.Sleep(1000);
             }
         }, _cancellationTokenSource.Token);
     }
@@ -141,5 +133,15 @@ public class DeviceManager
     public void StopBackgroundTask()
     {
         _cancellationTokenSource.Cancel();
+    }
+
+    public List<Device> GetDevices()
+    {
+        return listOfDevices;
+    }
+
+    public void LoadDevices(List<Device> devices)
+    {
+        listOfDevices = devices;
     }
 }
