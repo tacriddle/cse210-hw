@@ -8,4 +8,10 @@ public abstract class Device{
 
     public abstract void TurnOn();
     public abstract void TurnOff();
+    public abstract void DisplayStatus();
+      public string GetDeviceName()
+    {
+        return _deviceName;
+    }
+    public abstract void ChangeStatusOfDevice();
 }
